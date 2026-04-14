@@ -1,19 +1,9 @@
 ---
 import { Image } from 'astro:assets'
 
-import { Quote } from 'astro-pure/advanced'
-import { PostPreview } from 'astro-pure/components/pages'
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
-import { Button, Card, Icon, Label } from 'astro-pure/user'
 import PageLayout from '@/layouts/BaseLayout.astro'
-import ProjectCard from '@/components/home/ProjectCard.astro'
-import Section from '@/components/home/Section.astro'
-import SkillLayout from '@/components/home/SkillLayout.astro'
 import config from '@/site-config'
-
-const languages = ['Html', 'JavaScript', 'CSS', 'Shell']
-const frontend = ['TypeScript', 'Vite', 'Webpack', 'Astro']
-const backend = ['Vercel', 'Waline']
 
 const MAX_POSTS = 10
 const allPosts = await getBlogCollection()
@@ -30,168 +20,190 @@ if (!images[imagePath])
 ---
 
 <PageLayout meta={{ title: 'Home' }} highlightColor='#629D43'>
-  <main class='flex w-full flex-col items-center'>
-    <section class='animate mb-10 flex flex-col items-center gap-y-7' id='content-header'>
-      <Image
-        src={images[imagePath]()}
-        alt={config.logo.alt || 'Profile'}
-        class='h-28 w-auto rounded-full border p-1'
-        loading='eager'
-        fetchpriority='high'
-      />
+  <main class='w-full'>
+    {/* Hero Header */}
+    <header class='mb-8 pb-6 md:mb-12 md:pb-8 border-b border-border'>
+      <div class='grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-8 items-center'>
+        {/* Avatar */}
+        <div class='flex justify-center md:justify-start'>
+          <div class='w-32 h-32 md:w-48 md:h-48 lg:w-56 lg:h-56 overflow-hidden rounded-lg flex items-center justify-center bg-muted/30'>
+            <Image
+              src={images[imagePath]()}
+              alt={config.logo.alt ?? 'Avatar'}
+              class='w-full h-full object-contain block'
+              loading='eager'
+              fetchpriority='high'
+            />
+          </div>
+        </div>
 
-      <div class='flex flex-col items-center gap-y-4'>
-        <h1 class='text-3xl font-medium'>{config.author}</h1>
-        <div class='flex flex-wrap justify-center gap-x-7 gap-y-3'>
-          <Label title='Somewhere'>
-            <Icon name='location' class='size-5' slot='icon' />
-          </Label>
-          <Label
-            title='Source code'
-            as='a'
-            href='https://github.com/cworld1/astro-theme-pure'
-            target='_blank'
-          >
-            <Icon name='github' class='size-5' slot='icon' />
-          </Label>
+        {/* Right: Title + Bio + Info */}
+        <div class='flex flex-col justify-center space-y-4 md:space-y-6'>
+          <h1 class='text-3xl md:text-5xl lg:text-6xl font-light text-foreground m-0 leading-tight tracking-tight site-title'>
+            {config.author}
+          </h1>
+          <div class='pt-2 md:pt-4 border-t border-border'>
+            <div class='text-sm md:text-base font-serif text-foreground/80 leading-relaxed max-w-xl'>
+              <span class='text-primary/50 text-lg md:text-xl leading-none mr-2'>"</span>
+              {config.description}
+              <span class='text-primary/50 text-lg md:text-xl leading-none ml-2'>"</span>
+            </div>
+          </div>
+          <div class='flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-x-2 text-sm text-muted-foreground pt-2'>
+            <div class='flex items-center gap-x-2'>
+              <svg aria-hidden='true' class='size-4' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
+                <path d='M12 2a9 9 0 0 1 9 9c0 3.074-1.676 5.59-3.442 7.395a20.4 20.4 0 0 1-2.876 2.416l-.426.29l-.2.133l-.377.24l-.336.205l-.416.242a1.87 1.87 0 0 1-1.854 0l-.416-.242l-.52-.32l-.192-.125l-.41-.273a20.6 20.6 0 0 1-3.093-2.566C4.676 16.589 3 14.074 3 11a9 9 0 0 1 9-9m0 2a7 7 0 0 0-7 7c0 2.322 1.272 4.36 2.871 5.996a18 18 0 0 0 2.222 1.91l.458.326q.222.155.427.288l.39.25l.343.209l.289.169l.455-.269l.367-.23q.293-.186.627-.417l.458-.326a18 18 0 0 0 2.222-1.91C17.728 15.361 19 13.322 19 11a7 7 0 0 0-7-7m0 3a4 4 0 1 1 0 8a4 4 0 0 1 0-8m0 2a2 2 0 1 0 0 4a2 2 0 0 0 0-4' fill-rule='evenodd' />
+              </svg>
+              <span>{config.description}</span>
+            </div>
+            <span class='hidden sm:inline'>|</span>
+            <a
+              href='https://github.com/haozic/zhouhao-blog'
+              target='_blank'
+              rel='noopener noreferrer'
+              class='hover:text-primary transition-colors'
+            >
+              GitHub: haozic
+            </a>
+          </div>
         </div>
       </div>
+    </header>
 
-      {/* Get template */}
-      <a
-        href='https://github.com/cworld1/astro-theme-pure'
-        target='_blank'
-        class='flex flex-row items-center gap-x-3 rounded-full border bg-background px-4 py-2 text-sm shadow-sm transition-shadow hover:shadow-md'
-      >
-        <span class='relative flex items-center justify-center'>
-          <span
-            class='absolute size-2 animate-ping rounded-full border border-green-400 bg-green-400 opacity-75'
-          ></span>
-          <span class='size-2 rounded-full bg-green-400'></span>
-        </span>
-        <p class='font-medium text-muted-foreground'>Get Template</p>
-      </a>
-    </section>
-
-    <div id='content' class='animate flex flex-col gap-y-10 md:w-4/5 lg:w-5/6'>
-      <Section title='About'>
-        <p class='text-muted-foreground'>Developer / Designer</p>
-        <p class='text-muted-foreground'>
-          Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione
-          indoctum dissentiunt, cu meliore fuisset mei, vel quod voluptua ne. Ex dicat impedit mel,
-          at eum oratio possit voluptatum.
-        </p>
-        <Button title='More about me' class='w-fit self-end' href='/about' variant='ahead' />
-      </Section>
-      {
-        allPostsByDate.length > 0 && (
-          <Section title='Posts'>
-            <ul class='flex flex-col gap-y-1.5 sm:gap-y-2'>
-              {allPostsByDate.map((p) => (
-                <li class='flex flex-col gap-x-2 sm:flex-row'>
-                  <PostPreview post={p} />
-                </li>
-              ))}
-            </ul>
-            <Button title='More posts' class='w-fit self-end' href='/blog' variant='ahead' />
-          </Section>
-        )
-      }
-
-      {
-        /* <Section title='Experience'>
-      <Card
-        heading='Lorem Ipsum'
-        subheading='Sit amet consectetur'
-        date='Dec 2022 - Nov 2023'
-        imagePath='/src/assets/about-astro.png'
-        altText='Lorem, ipsum dolor sit'
-        imageClass='h-12 w-auto md:-start-16'
-      >
-        <ul class='ms-4 list-disc text-muted-foreground'>
-          <li>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore debitis recusandae, ut
-            molestiae laboriosam pariatur!
-
-            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, pariatur!</li>
-          </li>
-        </ul>
-      </Card>
-      <Card
-        heading='Lorem Ipsum'
-        subheading='Sit amet consectetur'
-        date='Dec 2022 - Nov 2023'
-        imagePath='/src/assets/about-astro.png'
-        altText='Lorem, ipsum dolor sit'
-        imageClass='h-12 w-auto md:-start-16'
-      />
-    </Section> */
-      }
-      <Section title='Education'>
-        <Card
-          as='a'
-          heading='Lorem ipsum'
-          subheading='Lorem ipsum dolor sit amet, vidit suscipit at mei.'
-          date='August 2021 - July 2025'
-          href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-        >
-          {
-            /* <ul class='ms-4 list-disc text-muted-foreground'>
-          <li>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore debitis recusandae, ut
-            molestiae laboriosam pariatur!
-          </li>
-          <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, pariatur!</li>
-        </ul> */
-          }
-        </Card>
-      </Section>
-
-      <Section title='Website List'>
-        <div class='grid grid-cols-1 gap-3 sm:grid-cols-2'>
-          <ProjectCard
-            href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-            heading='Lorem ipsum'
-            subheading='Do not go gentle into that good night'
-            imagePath='/src/assets/projects/1.avif'
-          />
-          <ProjectCard
-            href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-            heading='Lorem ipsum'
-            subheading='Old age burn and rave at close of day'
-            imagePath='/src/assets/projects/2.avif'
-          />
-          <ProjectCard
-            href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-            heading='Lorem ipsum'
-            subheading='Rage, rage against the dying of the light'
-            imagePath='/src/assets/projects/3.avif'
-          />
-          <ProjectCard
-            href='/projects'
-            heading='More projects'
-            subheading='Check out more projects'
-            imagePath='/src/assets/projects/4.avif'
-          />
+    {/* Main Content: Posts + Sidebar */}
+    <div class='grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 md:gap-8'>
+      {/* Left: Posts List */}
+      <main class='flex flex-col'>
+        {/* Section Header */}
+        <div class='flex items-center gap-2 mb-4 md:mb-5 pb-2 md:pb-3 border-b border-border'>
+          <svg aria-hidden='true' class='size-5' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
+            <path d='M18 2a2 2 0 0 1 2 2v11.586A2 2 0 0 1 19.414 17L15 21.414a2 2 0 0 1-1.414.586H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2H6v16h6v-4.5a1.5 1.5 0 0 1 1.5-1.5H18zm-.414 12H14v3.586zM10 11a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2zm5-4a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2Z' />
+          </svg>
+          <span class='text-xs text-muted-foreground uppercase tracking-wider'>最新文章</span>
         </div>
-      </Section>
 
-      <Section title='Certifications'>
-        <Card
-          as='a'
-          heading='Lorem ipsum'
-          subheading='Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione indoctum dissentiunt, cu meliore fuisset mei, vel quod voluptua ne. Ex dicat impedit mel, at eum oratio possit voluptatum. Dicat ceteros cu vim. Impetus fuisset ullamcorper pri cu, his posse iisque ad, aliquam honestatis usu id.'
-          date='July 2024'
-          href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-        />
-      </Section>
+        {/* Post List */}
+        <div class='flex flex-col gap-0.5'>
+          {allPostsByDate.length > 0
+            ? allPostsByDate.map((post, idx) => (
+                <a href={`/blog/${post.id}`} class='block no-underline group relative z-10'>
+                  <article class='relative grid grid-cols-[32px_1fr] gap-3 md:grid-cols-[40px_1fr] md:gap-5 py-2.5 md:py-3 border-b border-border last:border-b-0 transition-colors hover:bg-muted/50 cursor-pointer'>
+                    <div class='text-sm md:text-xl font-light text-muted-foreground/90 tabular-nums self-start leading-none relative z-10'>
+                      {String(idx + 1).padStart(2, '0')}
+                    </div>
+                    <div class='flex flex-col gap-1 md:gap-1.5 relative z-10 md:me-[40%]'>
+                      <div class='flex flex-col gap-0.5 md:gap-1'>
+                        <time class='text-xs text-muted-foreground tabular-nums'>
+                          {post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString('zh-CN') : ''}
+                        </time>
+                        <div class='text-lg md:text-xl font-normal text-foreground m-0 leading-snug transition-colors group-hover:text-primary'>
+                          {post.data.title ?? post.id}
+                        </div>
+                      </div>
+                      {post.data.description && (
+                        <p class='text-xs md:text-sm text-muted-foreground leading-relaxed m-0 line-clamp-2'>
+                          {post.data.description}
+                        </p>
+                      )}
+                    </div>
+                  </article>
+                </a>
+              ))
+            : <p class='text-muted-foreground'>暂无文章。</p>}
+        </div>
 
-      <Section title='Skills'>
-        <SkillLayout title='Languages' skills={languages} />
-        <SkillLayout title='Frontend' skills={frontend} />
-        <SkillLayout title='Backend' skills={backend} />
-      </Section>
+        {allPostsByDate.length > 0 && (
+          <div class='mt-4 md:mt-5 pt-3 md:pt-4 border-t border-border'>
+            <a href='/blog' class='text-sm text-foreground no-underline transition-colors hover:text-primary'>
+              全部文章 →
+            </a>
+          </div>
+        )}
+      </main>
+
+      {/* Right: Sidebar */}
+      <aside class='flex flex-col gap-3 md:gap-6 md:w-56 lg:w-64'>
+        {/* 站点统计 */}
+        <div class='receipt-style'>
+          <div class='border-l border-r border-dashed border-border px-3 md:px-4'>
+            <div class='text-xs text-muted-foreground uppercase tracking-wider flex items-center justify-between gap-2 pt-3 pb-2 mb-2 md:pt-4 md:mb-3 border-b-2 border-dashed border-border'>
+              <div class='flex items-center gap-2'>
+                <svg aria-hidden='true' class='size-4' width='22' height='22' viewBox='0 0 48 48' fill='currentColor'>
+                  <g fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'>
+                    <path d='M39.743 44.461c2.555-.208 4.51-2.163 4.718-4.718C44.723 36.515 45 31.364 45 24s-.277-12.515-.539-15.743c-.208-2.555-2.163-4.51-4.718-4.718C36.515 3.277 31.364 3 24 3s-12.515.277-15.743.539c-2.555.208-4.51 2.163-4.718 4.718C3.277 11.485 3 16.636 3 24s.277 12.515.539 15.743c.208 2.555 2.163 4.51 4.718 4.718C11.485 44.723 16.636 45 24 45s12.515-.277 15.743-.539' />
+                    <path d='M11 11h10m-10 6h6' />
+                  </g>
+                </svg>
+                <span>站点统计</span>
+              </div>
+              <span class='normal-case'>from 2024/01/01</span>
+            </div>
+            <div class='flex flex-col gap-1 text-sm'>
+              <div class='flex justify-between items-center py-1 border-b border-dashed border-border'>
+                <span class='text-muted-foreground text-xs md:text-sm'>文章</span>
+                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm'>{allPostsByDate.length}</span>
+              </div>
+              <div class='flex justify-between items-center py-1 border-b border-dashed border-border'>
+                <span class='text-muted-foreground text-xs md:text-sm'>字数</span>
+                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm'>-</span>
+              </div>
+              <div class='flex justify-between items-center py-1 border-b border-dashed border-border'>
+                <span class='text-muted-foreground text-xs md:text-sm'>运行时间</span>
+                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_uptime'>-</span>
+              </div>
+              <div class='flex justify-between items-center py-1 border-b border-dashed border-border'>
+                <span class='text-muted-foreground text-xs md:text-sm'>∑ PV</span>
+                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_value_site_pv'>-</span>
+              </div>
+              <div class='flex justify-between items-center py-1 pb-3 md:pb-4'>
+                <span class='text-muted-foreground text-xs md:text-sm'>∑ UV</span>
+                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_value_site_uv'>-</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 联系我 */}
+        <div class='px-3 md:px-5'>
+          <div class='border-l border-r border-dashed border-border px-3 md:px-4'>
+            <div class='text-xs text-muted-foreground uppercase tracking-wider flex items-center gap-2 pt-3 pb-2 mb-2 md:pt-4 md:mb-3 border-b-2 border-dashed border-border'>
+              <svg aria-hidden='true' class='size-4' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
+                <path fill='none' stroke='currentColor' stroke-linejoin='round' d='M21.5 12a14.5 14.5 0 1 1-29 0 14.5 14.5 0 0 1 29 0z' stroke-width='1' />
+                <path fill='none' stroke='currentColor' stroke-linecap='round' d='M12 8v4l3 3' stroke-width='1' />
+              </svg>
+              <span>联系我</span>
+            </div>
+            <div class='flex flex-row flex-wrap gap-2 md:gap-3 pb-3 md:pb-4'>
+              <a
+                href='https://github.com/haozic/zhouhao-blog'
+                target='_blank'
+                rel='noopener noreferrer'
+                class='flex items-center gap-1 text-xs md:text-sm text-muted-foreground no-underline transition-colors hover:text-primary py-1'
+              >
+                <svg aria-hidden='true' class='size-4' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
+                  <path fill='none' d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z' />
+                </svg>
+                <span class='hidden md:inline'>GitHub</span>
+              </a>
+              <a
+                href='/rss.xml'
+                target='_blank'
+                rel='noopener noreferrer'
+                class='flex items-center gap-1 text-xs md:text-sm text-primary no-underline transition-colors hover:text-primary/90 py-1'
+              >
+                <svg aria-hidden='true' class='size-4' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
+                  <path fill='none' d='M4 11a11 11 0 0 1 11 11' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' />
+                  <path fill='none' d='M4 4a16 16 0 0 1 16 16' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' />
+                  <circle cx='5' cy='19' r='1' fill='currentColor' />
+                </svg>
+                <span class='hidden md:inline'>RSS</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
-    <Quote class='mt-12' />
   </main>
 </PageLayout>
+
+<script is:inline src='https://vercount.min.js' async></script>
