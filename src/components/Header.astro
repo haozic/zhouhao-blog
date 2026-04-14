@@ -3,12 +3,28 @@ import config from 'virtual:config'
 
 import { Icon } from 'astro-pure/user'
 
-// 菜单图标直接内联（不用 set:html）
+// 直接内联 SVG，参考 8cat.life 风格
 const menuItems = [
-  { link: '/blog', title: '博客', icon: 'blog' },
-  { link: '/archives', title: '归档', icon: 'archive' },
-  { link: '/links', title: '友链', icon: 'link' },
-  { link: '/about', title: '关于', icon: 'user' },
+  {
+    link: '/blog',
+    title: '博客',
+    svg: `<svg aria-hidden="true" class="size-4" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2a2 2 0 0 1 2 2v11.586A2 2 0 0 1 19.414 17L15 21.414a2 2 0 0 1-1.414.586H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2H6v16h6v-4.5a1.5 1.5 0 0 1 1.5-1.5H18zm-.414 12H14v3.586zM10 11a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2zm5-4a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2Z"/></svg>`,
+  },
+  {
+    link: '/archives',
+    title: '归档',
+    svg: `<svg aria-hidden="true" class="size-4" width="22" height="22" viewBox="0 0 48 48" fill="currentColor"><path fill="currentColor" d="M15.144 49.574H40.88c4.593 0 7.054-2.39 7.054-6.984V19.246c2.274-.375 3.493-2.086 3.493-4.594V11.09c0-2.86-1.57-4.664-4.454-4.664H9.027c-2.742 0-4.453 1.804-4.453 4.664v3.562c0 2.508 1.242 4.22 3.492 4.594V42.59c0 4.617 2.485 6.984 7.078 6.984M9.988 15.777c-1.172 0-1.64-.492-1.64-1.664V11.63c0-1.172.468-1.664 1.64-1.664h36.047c1.195 0 1.617.492 1.617 1.664v2.484c0 1.172-.422 1.664-1.617 1.664Zm5.133 30.258c-2.11 0-3.281-1.148-3.281-3.258v-23.46h32.32v23.46c0 2.11-1.172 3.258-3.258 3.258Zm5.156-17.273H35.77c.961 0 1.665-.68 1.665-1.711v-.75c0-1.031-.704-1.688-1.665-1.688H20.277c-.984 0-1.664.657-1.664 1.688v.75c0 1.031.68 1.71 1.664 1.71"/></svg>`,
+  },
+  {
+    link: '/links',
+    title: '友链',
+    svg: `<svg aria-hidden="true" class="size-4" width="22" height="22" viewBox="0 0 20 20" fill="currentColor"><path fill="currentColor" d="M4.5 6.75a2.25 2.25 0 1 1 4.5 0a2.25 2.25 0 0 1-4.5 0M6.75 3.5a3.25 3.25 0 1 0 0 6.5a3.25 3.25 0 0 0 0-6.5M1.5 13a2 2 0 0 1 2-2h6.55a3.5 3.5 0 0 0-.713 1H3.5a1 1 0 0 0-1 1v.078l.007.083a2.95 2.95 0 0 0 .498 1.336C3.492 15.201 4.513 16 6.75 16c1.293 0 2.18-.267 2.792-.628c.182.287.405.546.66.768c-.787.508-1.898.86-3.452.86c-2.513 0-3.867-.92-4.568-1.934a3.95 3.95 0 0 1-.67-1.807a3 3 0 0 1-.012-.175zM12 7.5a2.5 2.5 0 1 0 5 0a2.5 2.5 0 0 0-5 0m1 0a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0m-.5 3.5a2.5 2.5 0 0 0 0 5h.5a.5.5 0 0 0 0-1h-.5a1.5 1.5 0 0 1 0-3h.5a.5.5 0 0 0 0-1zm3.5 0a.5.5 0 0 0 0 1h.5a1.5 1.5 0 0 1 0 3H16a.5.5 0 0 0 0 1h.5a2.5 2.5 0 0 0 0-5zm-4 2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5"/></svg>`,
+  },
+  {
+    link: '/about',
+    title: '关于',
+    svg: `<svg aria-hidden="true" class="size-4" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path fill="none" stroke="currentColor" stroke-linejoin="round" d="M2 9v8m0-5.5c.5-.5 1.5-2 3.5-2c.835 0 2 .5 2 1.5v6m5 0v-6c0-1-1.165-1.5-2-1.5c-1.48 0-2.414.822-3 1.452M15 13a3.5 3.5 0 0 0 6.247 2.169M15 13a3.5 3.5 0 1 1 7 0z" stroke-width="1"/></svg>`,
+  },
 ]
 ---
 
@@ -32,10 +48,10 @@ const menuItems = [
         {menuItems.map((item) => (
           <a
             href={item.link}
-            class='w-full flex-none grow py-2 text-right font-medium transition-none hover:text-primary sm:w-fit sm:px-3 flex items-center justify-end gap-x-1.5'
+            class='w-full flex-none grow py-2 text-right font-medium transition-none sm:w-fit sm:px-3 flex items-center justify-end gap-x-1.5'
             aria-label={item.title}
           >
-            <span class={`menu-icon-${item.icon}`} />
+            <span set:html={item.svg} />
             <span>{item.title}</span>
           </a>
         ))}
@@ -69,46 +85,6 @@ const menuItems = [
     </div>
   </div>
 </header-component>
-
-<style>
-  /* 内联 SVG 图标 */
-  .menu-icon-blog::before {
-    content: '';
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-  .menu-icon-archive::before {
-    content: '';
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='2' y='4' width='20' height='5' rx='2'/%3E%3Cpath d='M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9'/%3E%3Cpath d='M10 13h4'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-  .menu-icon-link::before {
-    content: '';
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-  .menu-icon-user::before {
-    content: '';
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-</style>
 
 <script is:inline>
   const toggleDarkModeElement = document.getElementById('toggleDarkMode')
