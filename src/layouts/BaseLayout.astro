@@ -28,12 +28,14 @@ const {
     <BaseHead {articleDate} {description} {ogImage} {title} />
     <ThemeProvider />
     <style>
+      /* 思源宋体（正文） - 来自 ZeoSeven */
+      @import url("https://fontsapi.zeoseven.com/285/main/result.css");
       /* 寒蝉活宋体（标题） - 来自 ZeoSeven */
       @import url("https://fontsapi.zeoseven.com/875/main/result.css");
       /* 全局字体 */
       :root {
-        --font-serif: "ChillHuoSong_F", "Noto Serif SC", serif;
-        --font-sans: "Noto Sans SC Variable", system-ui, sans-serif;
+        --font-serif: "Noto Serif CJK", serif;
+        --font-sans: "ChillHuoSong_F", "Noto Sans SC Variable", system-ui, sans-serif;
       }
       body {
         font-family: var(--font-serif);
