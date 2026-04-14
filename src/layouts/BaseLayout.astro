@@ -28,12 +28,15 @@ const {
     <BaseHead {articleDate} {description} {ogImage} {title} />
     <ThemeProvider />
     <style>
+      /* ZSFT-e（网站标题） - 来自 ZeoSeven */
+      @import url("https://fontsapi.zeoseven.com/e/main/result.css");
       /* 思源宋体（正文） - 来自 ZeoSeven */
       @import url("https://fontsapi.zeoseven.com/285/main/result.css");
       /* 寒蝉活宋体（标题） - 来自 ZeoSeven */
       @import url("https://fontsapi.zeoseven.com/875/main/result.css");
       /* 全局字体 */
       :root {
+        --font-brand: "ZSFT-e", serif;
         --font-serif: "Noto Serif CJK", serif;
         --font-sans: "ChillHuoSong_F", "Noto Sans SC Variable", system-ui, sans-serif;
       }
@@ -42,6 +45,10 @@ const {
       }
       h1, h2, h3, h4, h5, h6 {
         font-family: var(--font-sans);
+      }
+      /* 网站标题专用字体 */
+      .site-brand {
+        font-family: var(--font-brand) !important;
       }
     </style>
   </head>
