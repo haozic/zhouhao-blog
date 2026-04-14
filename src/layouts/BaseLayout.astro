@@ -8,6 +8,8 @@ import config from '@/site-config'
 // all pages through the use of the <BaseLayout /> component.
 import '@/assets/styles/global.css'
 import '@/assets/styles/app.css'
+import '@fontsource/noto-serif-sc/400.css'
+import '@fontsource-variable/noto-sans-sc'
 
 interface Props {
   meta: SiteMeta
@@ -25,6 +27,21 @@ const {
   <head>
     <BaseHead {articleDate} {description} {ogImage} {title} />
     <ThemeProvider />
+    <style>
+      /* 寒蝉活宋体（标题） - 来自 ZeoSeven */
+      @import url("https://fontsapi.zeoseven.com/875/main/result.css");
+      /* 全局字体 */
+      :root {
+        --font-serif: "ChillHuoSong_F", "Noto Serif SC", serif;
+        --font-sans: "Noto Sans SC Variable", system-ui, sans-serif;
+      }
+      body {
+        font-family: var(--font-serif);
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-sans);
+      }
+    </style>
   </head>
 
   <body class='flex justify-center bg-background text-foreground' {...props}>

@@ -3,9 +3,9 @@ import type { CardListData, Config, IntegrationUserConfig, ThemeUserConfig } fro
 export const theme: ThemeUserConfig = {
   // [Basic]
   /** Title for your website. Will be used in metadata and as browser tab title. */
-  title: 'Astro Theme Pure',
+  title: 'zhouhao',
   /** Will be used in index page & copyright declaration */
-  author: 'Pure Lab',
+  author: 'zhouhao',
   /** Description metadata for your website. Can be used in page metadata. */
   description: 'Stay hungry, stay foolish',
   /** The default favicon for your site which should be a path to an image in the `public/` directory. */
@@ -14,10 +14,10 @@ export const theme: ThemeUserConfig = {
   socialCard: '/images/social-card.png',
   /** Specify the default language for this site. */
   locale: {
-    lang: 'en-US',
-    attrs: 'en_US',
+    lang: 'zh-CN',
+    attrs: 'zh_CN',
     // Date locale
-    dateLocale: 'en-US',
+    dateLocale: 'zh-CN',
     dateOptions: {
       day: 'numeric',
       month: 'short',
@@ -48,11 +48,11 @@ export const theme: ThemeUserConfig = {
   /** Configure the header of your site. */
   header: {
     menu: [
-      { title: 'Blog', link: '/blog' },
-      { title: 'Docs', link: '/docs' },
-      { title: 'Projects', link: '/projects' },
-      { title: 'Links', link: '/links' },
-      { title: 'About', link: '/about' }
+      { title: '博客', link: '/blog' },
+      { title: '文档', link: '/docs' },
+      { title: '项目', link: '/projects' },
+      { title: '友链', link: '/links' },
+      { title: '关于', link: '/about' }
     ]
   },
 
@@ -70,15 +70,15 @@ export const theme: ThemeUserConfig = {
       },
       // Privacy Policy link
       {
-        title: 'Site Policy',
+        title: '站点协议',
         link: '/terms',
         pos: 2 // position set to 2 will be appended to copyright line
       }
     ],
-    /** Enable displaying a “Astro & Pure theme powered” link in your site’s footer. */
+    /** Enable displaying a "Astro & Pure theme powered" link in your site's footer. */
     credits: true,
     /** Optional details about the social media accounts for this site. */
-    social: { github: 'https://github.com/cworld1/astro-theme-pure' }
+    social: { github: 'https://github.com/haozic/zhouhao-blog' }
   },
 
   // [Content]
