@@ -28,10 +28,15 @@ const socialImageURL = new URL(ogImage ? ogImage : config.socialCard, Astro.url)
 <link rel='manifest' href='/favicon/site.webmanifest' />
 
 {/* Font preloads */}
-<Font cssVariable='--font-satoshi' preload={[{ subset: 'latin', style: 'normal' }]} />
+@import url("https://fontsapi.zeoseven.com/875/main/result.css");
+@import url("https://fontsapi.zeoseven.com/285/main/result.css");
 <style>
   body {
-    font-family: var(--font-satoshi);
+    font-family: "Noto Serif CJK", "ChillHuoSong_F", var(--font-satoshi), sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "ChillHuoSong_F", var(--font-satoshi), sans-serif;
+    font-weight: normal;
   }
 </style>
 
