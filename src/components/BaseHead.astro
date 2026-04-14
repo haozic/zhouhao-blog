@@ -26,8 +26,9 @@ const socialImageURL = new URL(ogImage ? ogImage : config.socialCard, Astro.url)
 <link rel='manifest' href='/favicon/site.webmanifest' />
 
 {/* Font preloads */}
-@import url("https://fontsapi.zeoseven.com/875/main/result.css");
-@import url("https://fontsapi.zeoseven.com/285/main/result.css");
+<link rel="preconnect" href="https://fontsapi.zeoseven.com" />
+<link rel="stylesheet" href="https://fontsapi.zeoseven.com/875/main/result.css" />
+<link rel="stylesheet" href="https://fontsapi.zeoseven.com/285/main/result.css" />
 <style>
   body {
     font-family: "Noto Serif CJK", "ChillHuoSong_F", var(--font-satoshi), sans-serif;
