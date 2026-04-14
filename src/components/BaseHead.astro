@@ -29,7 +29,17 @@ const socialImageURL = new URL(ogImage ? ogImage : config.socialCard, Astro.url)
 <link rel="preconnect" href="https://fontsapi.zeoseven.com" />
 <link rel="stylesheet" href="https://fontsapi.zeoseven.com/875/main/result.css" />
 <link rel="stylesheet" href="https://fontsapi.zeoseven.com/285/main/result.css" />
+<link rel="preload" as="font" href="https://fontsapi.zeoseven.com/e/main.woff2" crossorigin />
 <style>
+  @font-face {
+    font-family: "SiteBrandFont";
+    src: url("https://fontsapi.zeoseven.com/e/main.woff2") format("woff2");
+    font-weight: normal;
+    font-display: swap;
+  }
+  .site-brand {
+    font-family: "SiteBrandFont", var(--font-satoshi), sans-serif;
+  }
   body {
     font-family: "Noto Serif CJK", "ChillHuoSong_F", var(--font-satoshi), sans-serif;
   }
