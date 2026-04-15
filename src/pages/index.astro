@@ -77,15 +77,27 @@ if (!images[imagePath])
         {/* Post List */}
         <div class='flex flex-col gap-0.5'>
           {allPostsByDate.length > 0
-            ? allPostsByDate.map((post) => (
+            ? allPostsByDate.map((post, i) => (
                 <a href={`/blog/${post.id}`} class='block no-underline group relative z-10'>
-                  <article class='relative flex items-baseline justify-between gap-3 py-2.5 md:py-3 border-b border-border last:border-b-0 transition-colors hover:text-primary cursor-pointer'>
-                    <div class='text-base md:text-lg font-normal text-foreground m-0 leading-snug transition-colors group-hover:text-primary line-clamp-2'>
-                      {post.data.title ?? post.id}
+                  <article class='relative grid grid-cols-[32px_1fr] gap-3 md:grid-cols-[40px_1fr] md:gap-5 py-2.5 md:py-3 border-b border-border last:border-b-0 transition-colors hover:bg-muted/50 cursor-pointer'>
+                    {/* Index number */}
+                    <div class='text-sm md:text-xl font-light text-muted-foreground/90 tabular-nums self-start leading-none relative z-10'>
+                      {String(i + 1).padStart(2, '0')}
                     </div>
-                    <time class='text-xs md:text-sm text-muted-foreground tabular-nums shrink-0'>
-                      {post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString('zh-CN') : ''}
-                    </time>
+                    {/* Content: time + title + excerpt (excerpt hidden on mobile) */}
+                    <div class='flex flex-col gap-1 md:gap-1.5 relative z-10 md:me-[40%]'>
+                      <div class='flex flex-col gap-0.5 md:gap-1'>
+                        <time class='text-xs text-muted-foreground tabular-nums'>
+                          {post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString('zh-CN') : ''}
+                        </time>
+                        <div class='text-base md:text-lg font-normal text-foreground m-0 leading-snug transition-colors group-hover:text-primary'>
+                          {post.data.title ?? post.id}
+                        </div>
+                      </div>
+                      <p class='text-xs md:text-sm text-muted-foreground leading-relaxed m-0 hidden md:block'>
+                        {post.data.description || post.body?.slice(0, 100)}
+                      </p>
+                    </div>
                   </article>
                 </a>
               ))
