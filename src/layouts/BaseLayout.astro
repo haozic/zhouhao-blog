@@ -65,8 +65,6 @@ const {
         />
       )
     }
-    {/* 网格背景 */}
-    <div id='grid-bg' class='pointer-events-none fixed inset-0 z-0' />
     <div
       id='main-container'
       class='relative z-10 w-full max-w-[70rem] min-h-[100dvh] flex flex-col justify-between'
@@ -80,13 +78,6 @@ const {
 
     {/* Set highlight color */}
     <style define:vars={{ highlightColor }}>
-      #grid-bg {
-        background-image:
-          radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px);
-        background-size: 24px 24px;
-        mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
-        -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
-      }
       :global(.highlight) {
         --highlight-fg: color-mix(
           in srgb,

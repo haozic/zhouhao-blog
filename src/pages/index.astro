@@ -21,44 +21,52 @@ if (!images[imagePath])
 
 <PageLayout meta={{ title: 'Home' }} highlightColor='#629D43'>
   <main class='w-full'>
-    {/* Hero Header - 居中布局 */}
+    {/* Hero Header */}
     <header class='mb-8 pb-6 md:mb-12 md:pb-8 border-b border-border'>
-      <div class='flex flex-col items-center gap-4 md:gap-6'>
+      <div class='grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-8 items-center'>
         {/* Avatar */}
-        <div class='w-32 h-32 md:w-40 md:h-40 overflow-hidden rounded-full flex items-center justify-center bg-muted/30 border-2 border-border'>
-          <Image
-            src={images[imagePath]()}
-            alt={config.logo.alt ?? 'Avatar'}
-            class='w-full h-full object-contain block'
-            loading='eager'
-            fetchpriority='high'
-          />
+        <div class='flex justify-center md:justify-start'>
+          <div class='w-32 h-32 md:w-48 md:h-48 lg:w-56 lg:h-56 overflow-hidden rounded-lg flex items-center justify-center bg-muted/30'>
+            <Image
+              src={images[imagePath]()}
+              alt={config.logo.alt ?? 'Avatar'}
+              class='w-full h-full object-contain block'
+              loading='eager'
+              fetchpriority='high'
+            />
+          </div>
         </div>
 
-        {/* Title */}
-        <h1 class='text-3xl md:text-5xl font-light text-foreground m-0 leading-tight tracking-tight site-title text-center'>
-          {config.author}
-        </h1>
-
-        {/* Description */}
-        <div class='text-sm md:text-base font-serif text-foreground/80 leading-relaxed max-w-xl text-center'>
-          <span class='text-primary/50 text-lg md:text-xl leading-none mr-2'>"</span>
-          {config.description}
-          <span class='text-primary/50 text-lg md:text-xl leading-none ml-2'>"</span>
+        {/* Right: Title + Bio + Info */}
+        <div class='flex flex-col justify-center space-y-4 md:space-y-6'>
+          <h1 class='text-3xl md:text-5xl lg:text-6xl font-light text-foreground m-0 leading-tight tracking-tight site-title'>
+            {config.author}
+          </h1>
+          <div class='pt-2 md:pt-4 border-t border-border'>
+            <div class='text-sm md:text-base font-serif text-foreground/80 leading-relaxed max-w-xl'>
+              <span class='text-primary/50 text-lg md:text-xl leading-none mr-2'>"</span>
+              {config.description}
+              <span class='text-primary/50 text-lg md:text-xl leading-none ml-2'>"</span>
+            </div>
+          </div>
+          <div class='flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-x-2 text-sm text-muted-foreground pt-2'>
+            <div class='flex items-center gap-x-2'>
+              <svg aria-hidden='true' class='size-4' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
+                <path d='M12 2a9 9 0 0 1 9 9c0 3.074-1.676 5.59-3.442 7.395a20.4 20.4 0 0 1-2.876 2.416l-.426.29l-.2.133l-.377.24l-.336.205l-.416.242a1.87 1.87 0 0 1-1.854 0l-.416-.242l-.52-.32l-.192-.125l-.41-.273a20.6 20.6 0 0 1-3.093-2.566C4.676 16.589 3 14.074 3 11a9 9 0 0 1 9-9m0 2a7 7 0 0 0-7 7c0 2.322 1.272 4.36 2.871 5.996a18 18 0 0 0 2.222 1.91l.458.326q.222.155.427.288l.39.25l.343.209l.289.169l.455-.269l.367-.23q.293-.186.627-.417l.458-.326a18 18 0 0 0 2.222-1.91C17.728 15.361 19 13.322 19 11a7 7 0 0 0-7-7m0 3a4 4 0 1 1 0 8a4 4 0 0 1 0-8m0 2a2 2 0 1 0 0 4a2 2 0 0 0 0-4' fill-rule='evenodd' />
+              </svg>
+              <span>{config.description}</span>
+            </div>
+            <span class='hidden sm:inline'>|</span>
+            <a
+              href='https://github.com/haozic/zhouhao-blog'
+              target='_blank'
+              rel='noopener noreferrer'
+              class='hover:text-primary transition-colors'
+            >
+              GitHub: haozic
+            </a>
+          </div>
         </div>
-
-        {/* GitHub link */}
-        <a
-          href='https://github.com/haozic/zhouhao-blog'
-          target='_blank'
-          rel='noopener noreferrer'
-          class='flex items-center gap-x-2 text-sm text-muted-foreground hover:text-primary transition-colors'
-        >
-          <svg aria-hidden='true' class='size-4' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
-            <path fill='none' d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z' />
-          </svg>
-          <span>GitHub: haozic</span>
-        </a>
       </div>
     </header>
 
@@ -77,15 +85,27 @@ if (!images[imagePath])
         {/* Post List */}
         <div class='flex flex-col gap-0.5'>
           {allPostsByDate.length > 0
-            ? allPostsByDate.map((post) => (
+            ? allPostsByDate.map((post, idx) => (
                 <a href={`/blog/${post.id}`} class='block no-underline group relative z-10'>
-                  <article class='relative flex items-baseline justify-between gap-3 py-2.5 md:py-3 border-b border-border last:border-b-0 transition-colors hover:text-primary cursor-pointer'>
-                    <div class='text-base md:text-lg font-normal text-foreground m-0 leading-snug transition-colors group-hover:text-primary line-clamp-2'>
-                      {post.data.title ?? post.id}
+                  <article class='relative grid grid-cols-[32px_1fr] gap-3 md:grid-cols-[40px_1fr] md:gap-5 py-2.5 md:py-3 border-b border-border last:border-b-0 transition-colors hover:bg-muted/50 cursor-pointer'>
+                    <div class='text-sm md:text-xl font-light text-muted-foreground/90 tabular-nums self-start leading-none relative z-10'>
+                      {String(idx + 1).padStart(2, '0')}
                     </div>
-                    <time class='text-xs md:text-sm text-muted-foreground tabular-nums shrink-0'>
-                      {post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString('zh-CN') : ''}
-                    </time>
+                    <div class='flex flex-col gap-1 md:gap-1.5 relative z-10 md:me-[40%]'>
+                      <div class='flex flex-col gap-0.5 md:gap-1'>
+                        <time class='text-xs text-muted-foreground tabular-nums'>
+                          {post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString('zh-CN') : ''}
+                        </time>
+                        <div class='text-lg md:text-xl font-normal text-foreground m-0 leading-snug transition-colors group-hover:text-primary'>
+                          {post.data.title ?? post.id}
+                        </div>
+                      </div>
+                      {post.data.description && (
+                        <p class='text-xs md:text-sm text-muted-foreground leading-relaxed m-0 line-clamp-2'>
+                          {post.data.description}
+                        </p>
+                      )}
+                    </div>
                   </article>
                 </a>
               ))
@@ -102,7 +122,7 @@ if (!images[imagePath])
       </main>
 
       {/* Right: Sidebar */}
-      <aside class='hidden md:flex flex-col gap-3 md:gap-6 md:w-56 lg:w-64'>
+      <aside class='flex flex-col gap-3 md:gap-6 md:w-56 lg:w-64'>
         {/* 站点统计 */}
         <div class='receipt-style'>
           <div class='border-l border-r border-dashed border-border px-3 md:px-4'>
@@ -124,12 +144,20 @@ if (!images[imagePath])
                 <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm'>{allPostsByDate.length}</span>
               </div>
               <div class='flex justify-between items-center py-1 border-b border-dashed border-border'>
-                <span class='text-muted-foreground text-xs md:text-sm'>总访问量</span>
-                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_value_site_pv'>Loading</span>
+                <span class='text-muted-foreground text-xs md:text-sm'>字数</span>
+                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm'>-</span>
+              </div>
+              <div class='flex justify-between items-center py-1 border-b border-dashed border-border'>
+                <span class='text-muted-foreground text-xs md:text-sm'>运行时间</span>
+                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_uptime'>-</span>
+              </div>
+              <div class='flex justify-between items-center py-1 border-b border-dashed border-border'>
+                <span class='text-muted-foreground text-xs md:text-sm'>∑ PV</span>
+                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_value_site_pv'>-</span>
               </div>
               <div class='flex justify-between items-center py-1 pb-3 md:pb-4'>
-                <span class='text-muted-foreground text-xs md:text-sm'>总访客量</span>
-                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_value_site_uv'>Loading</span>
+                <span class='text-muted-foreground text-xs md:text-sm'>∑ UV</span>
+                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_value_site_uv'>-</span>
               </div>
             </div>
           </div>
@@ -178,4 +206,4 @@ if (!images[imagePath])
   </main>
 </PageLayout>
 
-<script defer src='https://events.vercount.one/js'></script>
+<script is:inline src='https://vercount.min.js' async></script>
