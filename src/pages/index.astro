@@ -144,20 +144,12 @@ if (!images[imagePath])
                 <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm'>{allPostsByDate.length}</span>
               </div>
               <div class='flex justify-between items-center py-1 border-b border-dashed border-border'>
-                <span class='text-muted-foreground text-xs md:text-sm'>字数</span>
-                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm'>-</span>
-              </div>
-              <div class='flex justify-between items-center py-1 border-b border-dashed border-border'>
-                <span class='text-muted-foreground text-xs md:text-sm'>运行时间</span>
-                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_uptime'>-</span>
-              </div>
-              <div class='flex justify-between items-center py-1 border-b border-dashed border-border'>
-                <span class='text-muted-foreground text-xs md:text-sm'>∑ PV</span>
-                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_value_site_pv'>-</span>
+                <span class='text-muted-foreground text-xs md:text-sm'>总访问量</span>
+                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_value_site_pv'>Loading</span>
               </div>
               <div class='flex justify-between items-center py-1 pb-3 md:pb-4'>
-                <span class='text-muted-foreground text-xs md:text-sm'>∑ UV</span>
-                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_value_site_uv'>-</span>
+                <span class='text-muted-foreground text-xs md:text-sm'>总访客量</span>
+                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm' id='vercount_value_site_uv'>Loading</span>
               </div>
             </div>
           </div>
@@ -206,4 +198,4 @@ if (!images[imagePath])
   </main>
 </PageLayout>
 
-<script is:inline src='https://vercount.min.js' async></script>
+<script defer src='https://events.vercount.one/js'></script>
