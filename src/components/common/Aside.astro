@@ -1,0 +1,86 @@
+---
+interface Props {
+  type?: 'tip' | 'note' | 'warning' | 'danger'
+  title?: string
+}
+
+const { type = 'tip', title } = Astro.props
+
+const icons = {
+  tip: '💡',
+  note: '📝',
+  warning: '⚠️',
+  danger: '🔴'
+}
+
+const titles = {
+  tip: '提示',
+  note: '备注',
+  warning: '警告',
+  danger: '危险'
+}
+---
+
+<aside class={`aside aside-${type}`}>
+  <div class="aside-header">
+    <span class="aside-icon">{icons[type]}</span>
+    <span class="aside-title">{title || titles[type]}</span>
+  </div>
+  <div class="aside-content">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .aside {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+    border-left: 4px solid;
+  }
+
+  .aside-tip {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-color: #3b82f6;
+  }
+
+  .aside-note {
+    background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+    border-color: #eab308;
+  }
+
+  .aside-warning {
+    background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+    border-color: #f97316;
+  }
+
+  .aside-danger {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border-color: #ef4444;
+  }
+
+  .aside-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .aside-icon {
+    font-size: 1.1rem;
+  }
+
+  .aside-title {
+    font-size: 0.95rem;
+  }
+
+  .aside-content {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .aside-content :global(p) {
+    margin: 0.25rem 0;
+  }
+</style>
