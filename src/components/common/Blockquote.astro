@@ -1,0 +1,57 @@
+---
+interface Props {
+  type?: 'note' | 'tip' | 'caution' | 'danger';
+  title?: string;
+}
+
+const { type = 'tip', title } = Astro.props;
+---
+<aside class={`callout callout-${type}`}>
+  {title && <p class="callout-title">{title}</p>}
+  <slot />
+</aside>
+
+<style>
+  .callout {
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    border-radius: 0.5rem;
+    border-left: 4px solid;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .callout-note {
+    background: linear-gradient(135deg, #e6f2ff 0%, #f0f7ff 100%);
+    border-color: #2563eb;
+  }
+  .callout-tip {
+    background: linear-gradient(135deg, #e6fff2 0%, #f0fff7 100%);
+    border-color: #16a34a;
+  }
+  .callout-caution {
+    background: linear-gradient(135deg, #fffbe6 0%, #fffef0 100%);
+    border-color: #d97706;
+  }
+  .callout-danger {
+    background: linear-gradient(135deg, #fff0f0 0%, #fff5f5 100%);
+    border-color: #dc2626;
+  }
+  .callout-title {
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+  }
+  .callout p {
+    margin: 0;
+  }
+  .callout > p:first-child:not(.callout-title) {
+    margin-top: 0;
+  }
+  .callout > * + * {
+    margin-top: 0.5rem;
+  }
+  /* 移除默认 blockquote 的斜体 */
+  .callout em {
+    font-style: normal;
+  }
+</style>
