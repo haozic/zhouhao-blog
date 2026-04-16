@@ -1,0 +1,44 @@
+---
+interface Props {
+  type?: 'note' | 'tip' | 'caution' | 'danger';
+  title?: string;
+}
+
+const { type = 'note', title } = Astro.props;
+---
+<aside class={`aside aside-${type}`}>
+  {title && <p class="aside-title">{title}</p>}
+  <slot />
+</aside>
+
+<style>
+  .aside {
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border-radius: 0.5rem;
+    border-left: 4px solid;
+  }
+  .aside-note {
+    background: linear-gradient(135deg, #e6f2ff 0%, #f0f7ff 100%);
+    border-color: #2563eb;
+  }
+  .aside-tip {
+    background: linear-gradient(135deg, #e6fff2 0%, #f0fff7 100%);
+    border-color: #16a34a;
+  }
+  .aside-caution {
+    background: linear-gradient(135deg, #fffbe6 0%, #fffef0 100%);
+    border-color: #d97706;
+  }
+  .aside-danger {
+    background: linear-gradient(135deg, #fff0f0 0%, #fff5f5 100%);
+    border-color: #dc2626;
+  }
+  .aside-title {
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+  }
+  .aside p {
+    margin: 0;
+  }
+</style>
