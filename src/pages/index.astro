@@ -3,9 +3,9 @@ import { Image } from 'astro:assets'
 
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
 import PageLayout from '@/layouts/BaseLayout.astro'
-import config from '@/site-config'
+import config from '../site.config'
 
-const MAX_POSTS = 10
+const MAX_POSTS = 6
 const allPosts = await getBlogCollection()
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 
@@ -19,13 +19,13 @@ if (!images[imagePath])
   )
 ---
 
-<PageLayout meta={{ title: 'Home' }} highlightColor='#629D43'>
+<PageLayout meta={{ title: 'Home' }} highlightColor='#D4A574'>
   <main class='w-full'>
-    {/* Hero Header - 居中布局 */}
+    {/* Hero Header - 左右布局 */}
     <header class='mb-8 pb-6 md:mb-12 md:pb-8 border-b border-border'>
-      <div class='flex flex-col items-center gap-4 md:gap-6'>
-        {/* Avatar */}
-        <div class='w-32 h-32 md:w-40 md:h-40 overflow-hidden rounded-full flex items-center justify-center bg-muted/30 border-2 border-border'>
+      <div class='flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10'>
+        {/* Avatar - 移动端居中，桌面端在左 */}
+        <div class='w-32 h-32 md:w-40 md:h-40 shrink-0 overflow-hidden rounded-full flex items-center justify-center bg-muted/30 border-2 border-border'>
           <Image
             src={images[imagePath]()}
             alt={config.logo.alt ?? 'Avatar'}
@@ -35,30 +35,23 @@ if (!images[imagePath])
           />
         </div>
 
-        {/* Title */}
-        <h1 class='text-3xl md:text-5xl font-light text-foreground m-0 leading-tight tracking-tight site-title text-center'>
-          {config.author}
-        </h1>
+        {/* 介绍 - 移动端居中，桌面端在右 */}
+        <div class='flex flex-col gap-2 text-center md:text-left'>
+          {/* 第一行：zhouhao */}
+          <h1 class='text-3xl md:text-4xl font-light text-foreground m-0 leading-tight tracking-tight site-title'>
+            zhouhao
+          </h1>
 
-        {/* Description */}
-        <div class='text-sm md:text-base font-serif text-foreground/80 leading-relaxed max-w-xl text-center'>
-          <span class='text-primary/50 text-lg md:text-xl leading-none mr-2'>"</span>
-          {config.description}
-          <span class='text-primary/50 text-lg md:text-xl leading-none ml-2'>"</span>
+          {/* 第二行：我思故我在 */}
+          <p class='text-lg md:text-xl text-foreground/80 m-0 font-serif italic'>
+            我思故我在
+          </p>
+
+          {/* 第三行：定位 + 投资实证之路 */}
+          <p class='text-sm md:text-base text-muted-foreground m-0'>
+            China · 投资实证之路
+          </p>
         </div>
-
-        {/* GitHub link */}
-        <a
-          href='https://github.com/haozic/zhouhao-blog'
-          target='_blank'
-          rel='noopener noreferrer'
-          class='flex items-center gap-x-2 text-sm text-muted-foreground hover:text-primary transition-colors'
-        >
-          <svg aria-hidden='true' class='size-4' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
-            <path fill='none' d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z' />
-          </svg>
-          <span>GitHub: haozic</span>
-        </a>
       </div>
     </header>
 
@@ -74,8 +67,8 @@ if (!images[imagePath])
           <span class='text-xs text-muted-foreground uppercase tracking-wider'>最新文章</span>
         </div>
 
-        {/* Post List */}
-        <div class='flex flex-col gap-0.5'>
+        {/* Post List - 简化宽度，居中显示 */}
+        <div class='max-w-2xl mx-auto md:mx-0 flex flex-col gap-0.5'>
           {allPostsByDate.length > 0
             ? allPostsByDate.map((post, i) => (
                 <a href={`/blog/${post.id}`} class='block no-underline group relative z-10'>
@@ -84,7 +77,7 @@ if (!images[imagePath])
                     <div class='text-sm md:text-xl font-light text-muted-foreground/90 tabular-nums self-start leading-none relative z-10'>
                       {String(i + 1).padStart(2, '0')}
                     </div>
-                    {/* Content: time + title + excerpt (excerpt hidden on mobile) */}
+                    {/* Content: time + title + excerpt */}
                     <div class='flex flex-col gap-0.5 md:gap-1 relative z-10'>
                       <time class='text-xs text-muted-foreground tabular-nums'>
                         {post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString('zh-CN') : ''}
@@ -103,7 +96,7 @@ if (!images[imagePath])
         </div>
 
         {allPostsByDate.length > 0 && (
-          <div class='mt-4 md:mt-5 pt-3 md:pt-4 border-t border-border'>
+          <div class='mt-4 md:mt-5 pt-3 md:pt-4 border-t border-border max-w-2xl mx-auto md:mx-0'>
             <a href='/blog' class='text-sm text-foreground no-underline transition-colors hover:text-primary'>
               全部文章 →
             </a>
@@ -155,30 +148,30 @@ if (!images[imagePath])
               </svg>
               <span>联系我</span>
             </div>
-            <div class='flex flex-row flex-wrap gap-2 md:gap-3 pb-3 md:pb-4'>
+            <div class='flex flex-row flex-wrap gap-3 pb-3 md:pb-4'>
               <a
                 href='https://github.com/haozic/zhouhao-blog'
                 target='_blank'
                 rel='noopener noreferrer'
-                class='flex items-center gap-1 text-xs md:text-sm text-muted-foreground no-underline transition-colors hover:text-primary py-1'
+                class='flex items-center gap-2 text-sm text-muted-foreground no-underline transition-colors hover:text-primary py-1'
               >
-                <svg aria-hidden='true' class='size-4' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
+                <svg aria-hidden='true' class='size-5' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
                   <path fill='none' d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z' />
                 </svg>
-                <span class='hidden md:inline'>GitHub</span>
+                <span>GitHub</span>
               </a>
               <a
                 href='/rss.xml'
                 target='_blank'
                 rel='noopener noreferrer'
-                class='flex items-center gap-1 text-xs md:text-sm text-primary no-underline transition-colors hover:text-primary/90 py-1'
+                class='flex items-center gap-2 text-sm text-muted-foreground no-underline transition-colors hover:text-primary py-1'
               >
-                <svg aria-hidden='true' class='size-4' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
+                <svg aria-hidden='true' class='size-5' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
                   <path fill='none' d='M4 11a11 11 0 0 1 11 11' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' />
                   <path fill='none' d='M4 4a16 16 0 0 1 16 16' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' />
                   <circle cx='5' cy='19' r='1' fill='currentColor' />
                 </svg>
-                <span class='hidden md:inline'>RSS</span>
+                <span>RSS</span>
               </a>
             </div>
           </div>

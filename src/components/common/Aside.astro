@@ -2,37 +2,112 @@
 interface Props {
   type?: 'note' | 'tip' | 'caution' | 'danger';
   title?: string;
+  style?: 'default' | 'card';
 }
 
-const { type = 'note', title } = Astro.props;
+const { type = 'note', title, style = 'default' } = Astro.props;
+
+const icons: Record<string, string> = {
+  note: 'ℹ️',
+  tip: '💡',
+  caution: '⚠️',
+  danger: '🚫'
+};
+
+const defaultTitles: Record<string, string> = {
+  note: 'Note',
+  tip: 'Tip',
+  caution: 'Caution',
+  danger: 'Danger'
+};
+
+const displayTitle = title || defaultTitles[type];
 ---
-<aside class={`aside aside-${type}`}>
-  {title && <p class="aside-title">{title}</p>}
-  <slot />
-</aside>
+
+{style === 'card' ? (
+  <aside class={`card-aside card-aside-${type}`}>
+    <div class="card-aside-header">
+      <span class="card-aside-icon">{icons[type]}</span>
+      <span class="card-aside-title">{displayTitle}</span>
+    </div>
+    <div class="card-aside-content">
+      <slot />
+    </div>
+  </aside>
+) : (
+  <aside class={`aside aside-${type}`} aria-label={displayTitle}>
+    <div class="aside-content">
+      {title && <p class="aside-title">{title}</p>}
+      <slot />
+    </div>
+  </aside>
+)}
 
 <style>
-  .aside {
-    padding: 1rem;
+  /* Card style with badge */
+  .card-aside {
     margin: 1.5rem 0;
-    border-radius: 0.5rem;
-    border-left: 4px solid;
+    border-radius: 0.75rem;
+    border: 1px solid;
+    overflow: hidden;
   }
-  .aside-note {
+  .card-aside-note {
     background: linear-gradient(135deg, #e6f2ff 0%, #f0f7ff 100%);
     border-color: #2563eb;
   }
-  .aside-tip {
+  .card-aside-tip {
     background: linear-gradient(135deg, #e6fff2 0%, #f0fff7 100%);
     border-color: #16a34a;
   }
-  .aside-caution {
+  .card-aside-caution {
     background: linear-gradient(135deg, #fffbe6 0%, #fffef0 100%);
     border-color: #d97706;
   }
-  .aside-danger {
+  .card-aside-danger {
     background: linear-gradient(135deg, #fff0f0 0%, #fff5f5 100%);
     border-color: #dc2626;
+  }
+  .card-aside-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid currentColor;
+  }
+  .card-aside-note .card-aside-header { color: #2563eb; }
+  .card-aside-tip .card-aside-header { color: #16a34a; }
+  .card-aside-caution .card-aside-header { color: #d97706; }
+  .card-aside-danger .card-aside-header { color: #dc2626; }
+  .card-aside-icon {
+    font-size: 1rem;
+  }
+  .card-aside-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .card-aside-content {
+    padding: 1rem;
+  }
+  .card-aside-content p {
+    margin: 0;
+  }
+  .card-aside-content > * + * {
+    margin-top: 0.5rem;
+  }
+
+  /* Default style (border-left) */
+  .aside {
+    margin: 1.5rem 0;
+    border-radius: 0.5rem;
+    border-left: 4px solid;
+    background: transparent;
+  }
+  .aside-note { border-color: #2563eb; }
+  .aside-tip { border-color: #16a34a; }
+  .aside-caution { border-color: #d97706; }
+  .aside-danger { border-color: #dc2626; }
+  .aside-content {
+    padding: 1rem;
   }
   .aside-title {
     font-weight: 600;
