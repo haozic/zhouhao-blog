@@ -80,10 +80,13 @@ const {
 
     {/* Set highlight color */}
     <style>
-      /* 网格背景样式已移除 */
-      /* 背景改为半透明，延伸至屏幕顶部（修复iOS状态栏区域白色缝隙） */
+      /* 沉浸式状态栏：html 元素铺满背景，覆盖状态栏区域 */
+      html {
+        background-color: hsl(var(--background));
+      }
+      /* body 在 html 基础上叠半透明层，保留内容区层次感 */
       body {
-        background-color: hsl(var(--muted) / 0.3);
+        background-color: hsl(var(--background) / 0.6);
       }
     </style>
 
