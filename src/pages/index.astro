@@ -1,13 +1,18 @@
 ---
 import { Image } from 'astro:assets'
 
-import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
+import { getBlogCollection, getUniqueTagsWithCount, sortMDByDate } from 'astro-pure/server'
+import { PostPreview } from 'astro-pure/components/pages'
+import { Button, Icon } from 'astro-pure/user'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import config from '../site.config'
 
 const MAX_POSTS = 6
 const allPosts = await getBlogCollection()
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
+
+// Get all unique tags with count for tag cloud
+const allTags = getUniqueTagsWithCount(allPosts)
 
 const imagePath = config.logo.src
 const images = import.meta.glob<{ default: ImageMetadata }>(
@@ -62,33 +67,14 @@ if (!images[imagePath])
           <span class='text-xs text-muted-foreground uppercase tracking-wider'>最新文章</span>
         </div>
 
-        {/* Post List */}
-        <div class='flex flex-col gap-3'>
+        {/* Post List - Use PostPreview for detailed display with images */}
+        <ul class='flex flex-col gap-y-4 text-start'>
           {allPostsByDate.length > 0
-            ? allPostsByDate.map((post, i) => (
-                <a href={`/blog/${post.id}`} class='block no-underline group'>
-                  <article class='relative overflow-hidden rounded-lg border border-border bg-muted/20 hover:bg-muted/40 transition-colors cursor-pointer'>
-                    <div class='relative z-10 p-4 md:py-4'>
-                      <div class='flex items-baseline gap-3 mb-1.5'>
-                        <span class='text-lg md:text-xl font-light text-muted-foreground/60'>
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <time class='text-xs text-muted-foreground/60 tabular-nums'>
-                          {post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString('zh-CN') : ''}
-                        </time>
-                      </div>
-                      <h2 class='text-base md:text-lg font-medium text-foreground m-0 leading-snug group-hover:text-primary transition-colors mb-1'>
-                        {post.data.title ?? post.id}
-                      </h2>
-                      <p class='text-xs text-muted-foreground/70 m-0 leading-relaxed line-clamp-2'>
-                        {post.data.description}
-                      </p>
-                    </div>
-                  </article>
-                </a>
+            ? allPostsByDate.map((post) => (
+                <PostPreview post={post} detailed />
               ))
             : <p class='text-muted-foreground'>暂无文章。</p>}
-        </div>
+        </ul>
 
         {allPostsByDate.length > 0 && (
           <div class='mt-4 md:mt-5 pt-3 md:pt-4 border-t border-border'>
@@ -101,6 +87,33 @@ if (!images[imagePath])
 
       {/* Sidebar */}
       <aside class='hidden md:flex flex-col gap-3 md:gap-6 md:w-56 lg:w-64'>
+        {/* 标签云 */}
+        {allTags.length > 0 && (
+          <div class='receipt-style'>
+            <div class='border-l border-r border-dashed border-border px-3 md:px-4'>
+              <div class='text-xs text-muted-foreground uppercase tracking-wider flex items-center gap-2 pt-3 pb-2 mb-3 md:pt-4 border-b-2 border-dashed border-border'>
+                <svg aria-hidden='true' class='size-4' width='22' height='22' viewBox='0 0 24 24' fill='currentColor'>
+                  <path d='M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z' />
+                  <line x1='7' y1='7' x2='7.01' y2='7' stroke='currentColor' stroke-width='2' stroke-linecap='round' />
+                </svg>
+                <span>标签云</span>
+              </div>
+              <ul class='flex flex-wrap gap-2 pb-3 md:pb-4'>
+                {allTags.slice(0, 30).map(([tag, count]) => (
+                  <li>
+                    <Button as='a' title={`${tag} (${count})`} href={`/tags/${tag}`} variant='pill' />
+                  </li>
+                ))}
+              </ul>
+              <span class='mt-2 block text-end'>
+                <a aria-label='View all tags' href='/tags' class='text-xs text-muted-foreground hover:text-primary'>
+                  查看全部 →
+                </a>
+              </span>
+            </div>
+          </div>
+        )}
+
         {/* 站点统计 */}
         <div class='receipt-style'>
           <div class='border-l border-r border-dashed border-border px-3 md:px-4'>
@@ -119,7 +132,7 @@ if (!images[imagePath])
             <div class='flex flex-col gap-1 text-sm'>
               <div class='flex justify-between items-center py-1 border-b border-dashed border-border'>
                 <span class='text-muted-foreground text-xs md:text-sm'>文章</span>
-                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm'>{allPostsByDate.length}</span>
+                <span class='text-foreground font-semibold tabular-nums text-xs md:text-sm'>{allPosts.length}</span>
               </div>
               <div class='flex justify-between items-center py-1 border-b border-dashed border-border'>
                 <span class='text-muted-foreground text-xs md:text-sm'>总访问量</span>
@@ -182,11 +195,5 @@ if (!images[imagePath])
   .stamp-border {
     border-radius: 8px;
     box-shadow: 0 0 0 3px #fff, 0 0 0 4px #d4a574;
-  }
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 </style>
