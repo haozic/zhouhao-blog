@@ -114,7 +114,6 @@ const typographyConfig: TypographyOptions = {
     'ol, ul': { 'padding-inline-start': '1.625em' },
     'ol>li, ul>li': { 'padding-inline-start': '.375em' },
     li: { 'margin-top': '.5em', 'margin-bottom': '.5em' },
-    p: { 'line-height': '1.8', 'margin-bottom': '1.2em' },
     // Others
     img: { 'border-radius': radius, margin: '0 auto' },
     kbd: {
