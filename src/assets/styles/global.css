@@ -277,9 +277,9 @@ span.katex-display {
 html {
   background-color: hsl(var(--background));
 }
-/* body 在 html 基础上叠半透明层 */
+/* body 背景和 html 一致，完全覆盖 */
 body {
-  background-color: hsl(var(--background) / 0.6);
+  background-color: hsl(var(--background));
 }
 :not(html) {
   & ::-webkit-scrollbar {
