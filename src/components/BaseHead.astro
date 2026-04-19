@@ -27,9 +27,12 @@ const socialImageURL = new URL(ogImage ? ogImage : config.socialCard, Astro.url)
 
 {/* Font preloads */}
 <link rel="preconnect" href="https://fontsapi.zeoseven.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fontsapi.zeoseven.com/875/main/result.css" />
 <link rel="stylesheet" href="https://fontsapi.zeoseven.com/285/main/result.css" />
 <link rel="preload" as="font" href="https://fontsapi.zeoseven.com/e/main.woff2" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai:wght@400;500;700&display=swap" />
 <style>
   @font-face {
     font-family: "SiteBrandFont";
@@ -37,15 +40,17 @@ const socialImageURL = new URL(ogImage ? ogImage : config.socialCard, Astro.url)
     font-weight: normal;
     font-display: swap;
   }
-  .site-brand {
-    font-family: "SiteBrandFont", var(--font-satoshi), sans-serif;
-  }
+  /* 全局字体：正文和标题都用霞鹜文楷 */
   body {
-    font-family: "Noto Serif CJK", "ChillHuoSong_F", var(--font-satoshi), sans-serif;
+    font-family: 'LXGW WenKai', 'Noto Serif CJK', var(--font-serif), serif;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: "ChillHuoSong_F", var(--font-satoshi), sans-serif;
-    font-weight: normal;
+    font-family: 'LXGW WenKai', 'Noto Serif CJK', var(--font-sans), sans-serif;
+    font-weight: 500;
+  }
+  .site-brand,
+  .site-title {
+    font-family: "SiteBrandFont", var(--font-brand), serif !important;
   }
 </style>
 
