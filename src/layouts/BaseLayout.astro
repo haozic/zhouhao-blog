@@ -55,7 +55,7 @@ const {
     </style>
   </head>
 
-  <body class='flex justify-center text-foreground' {...props}>
+  <body class='flex justify-center bg-background text-foreground' {...props}>
     {
       highlightColor && (
         <div
@@ -79,12 +79,15 @@ const {
     </div>
 
     {/* Set highlight color */}
-    <style define:vars={{ highlightColor }}>
+    <style>
       /* 网格背景样式已移除 */
-      /* 背景改为文章页浅绿色 */
+      /* 背景改为半透明，延伸至屏幕顶部（修复iOS状态栏区域白色缝隙） */
       body {
         background-color: hsl(var(--muted) / 0.3);
       }
+    </style>
+
+    <style define:vars={{ highlightColor }}>
       :global(.highlight) {
         --highlight-fg: color-mix(
           in srgb,
