@@ -271,6 +271,16 @@ span.katex-display {
 :root {
   --scrollbar-thumb: hsl(var(--muted-foreground) / var(--un-bg-opacity, 0.3));
 }
+
+/* [Immersive status bar] - 沉浸式状态栏 */
+/* html 元素铺满背景，覆盖状态栏区域 */
+html {
+  background-color: hsl(var(--background));
+}
+/* body 在 html 基础上叠半透明层 */
+body {
+  background-color: hsl(var(--background) / 0.6);
+}
 :not(html) {
   & ::-webkit-scrollbar {
     width: 5px;
