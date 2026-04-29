@@ -6,7 +6,7 @@ tags:
   - AI工具
   - 前端设计
   - 设计技能
-heroImage: { src: './cover-skills.webp', color: '#2D3748' }
+heroImage: { src: './index-impeccable.webp', color: '#2D3748' }
 ---
 
 Impeccable.style 是一个专为 AI 编码工具（特别是 Anthropic 的 Claude）设计的 前端设计增强技能包（design skill / prompt framework）。它本质上是一套"设计语言 + 指令系统"，旨在大幅提升 AI 生成的网页界面（UI/前端代码）的审美水平和专业度。通过这套工具，AI 生成的界面不再带有明显的"AI 生成"痕迹，而是更接近优秀人类设计师的作品。
@@ -28,7 +28,11 @@ Impeccable.style 的主要作用是通过一套预定义的指令系统，提升
 - 设计决策自动化：用户可以在 prompt 中添加指令（如 /polish），AI 会根据 Impeccable 的规则体系自动调整代码和设计方向。
 - 界面优化：从审美、一致性、性能到用户体验的多维度提升。
 - 简化工作流：开发者无需从零学习复杂设计原理，只需记住并组合指令，即可生成高质量界面。
-- 示例使用：在 prompt 结尾添加指令组合，例如：`/polish + /distill + /animate`，AI 就会按照这些规则精炼界面。
+- 示例使用：在 prompt 结尾添加指令组合，例如：
+```
+/polish + /distill + /animate
+```
+AI 就会按照这些规则精炼界面。
 
 目前，Impeccable.style 提供 17 个核心设计指令（类似设计专用 DSL），这些指令覆盖从审计到优化的各种设计阶段，帮助用户快速迭代界面设计。
 
